@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>برامج وادوات الشامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin:0;
+  font-family:'Roboto',sans-serif;
+  background: #1f1c2c;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+  color:#fff;
+}
+
+/* رأس الشاشة */
+header {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+button.oracle-btn {
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:#6a11cb;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+button.oracle-btn.active {background:#2575fc;}
+
+/* أزرار البرامج */
+.programs {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+button.program-btn {
+  padding:8px 16px;
+  border:none;
+  border-radius:6px;
+  background:#6a11cb;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+button.program-btn.active {background:#2575fc;}
+
+/* البطاقات */
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:20px;
+  width:100%;
+  max-width:1600px;
+}
+
+/* البطاقة */
+.card {
+  display:flex;
+  flex-direction:column;
+  background:#312f44;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+.card h3 {margin:0 0 5px 0;}
+.card p {margin:3px 0;font-size:0.9em;}
+.card a {
+  margin-top:8px;
+  display:inline-block;
+  text-decoration:none;
+  color:white;
+  background:#2575fc;
+  padding:6px 12px;
+  border-radius:6px;
+  font-size:0.9em;
+  transition:0.3s;
+}
+.card a:hover {background:#6a11cb;}
+
+/* زر إظهار النسخ القديمة */
+#show-old-btn {
+  margin:20px 0;
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  background:#ff6a00;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+#show-old-btn:hover {opacity:0.8;}
+
+/* الخط الفاصل بين الجديد والقديم */
+.separator {
+  width:100%;
+  border-top:2px dashed #fff;
+  margin:20px 0 20px 0;
+  opacity:0.5;
+}
+
+@media(max-width:650px){
+  header, .programs {flex-direction:column;align-items:center;}
+  .card {width:90%;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="oracle-btn active" data-oracle="19">Oracle 19</button>
+  <button class="oracle-btn" data-oracle="10">Oracle 10</button>
+</header>
+
+<div class="programs">
+  <button class="program-btn active" data-program="الشامل">الشامل</button>
+  <button class="program-btn" data-program="الشامل بلاس">الشامل بلاس</button>
+  <button class="program-btn" data-program="الأولتكس">الأولتكس</button>
+</div>
+
+<div class="cards" id="new-cards-container"></div>
+
+<button id="show-old-btn">إظهار النسخ القديمة</button>
+
+<!-- الخط الفاصل -->
+<div class="separator"></div>
+
+<div class="cards" id="old-cards-container"></div>
+
+<script src="versions.js"></script>
+<script>
+let selectedOracle="19", selectedProgram="الشامل", showOld=false;
+
+const oracleBtns=document.querySelectorAll(".oracle-btn");
+oracleBtns.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    oracleBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedOracle=btn.dataset.oracle;
+    renderCards();
+  });
+});
+
+const programBtns=document.querySelectorAll(".program-btn");
+programBtns.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    programBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedProgram=btn.dataset.program;
+    renderCards();
+  });
+});
+
+document.getElementById("show-old-btn").addEventListener("click",()=>{
+  showOld=!showOld;
+  renderCards();
+});
+
+function renderCards(){
+  const newContainer=document.getElementById("new-cards-container");
+  const oldContainer=document.getElementById("old-cards-container");
+  newContainer.innerHTML="";
+  oldContainer.innerHTML="";
+
+  if(!VERSIONS[selectedProgram]) return;
+
+  let versions=VERSIONS[selectedProgram]
+    .filter(v=>v.oracle===selectedOracle)
+    .sort((a,b)=>b.version.localeCompare(a.version));
+
+  versions.forEach(v=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <h3>${v.name} oracle ${v.oracle} ver${v.version}</h3>
+      <h3>${v.update} : تحديث</h3>
+      <p><strong>تاريخ الإصدار:</strong> ${v.releaseDate}</p>
+      <p>${v.desc}</p>
+      <p><strong>${v.pos}</strong></p>
+      <a href="${v.url}" target="_blank">تحميل</a>
+    `;
+    if(v.status==="new"){
+      newContainer.appendChild(card);
+    } else if(showOld && v.status==="old"){
+      oldContainer.appendChild(card);
+    }
+  });
+}
+
+renderCards();
+</script>
+
+</body>
+</html>
