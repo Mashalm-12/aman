@@ -1,207 +1,593 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>برامج وادوات الشامل</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-body {
-  margin:0;
-  font-family:'Roboto',sans-serif;
-  background: #1f1c2c;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:20px;
-  color:#fff;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>برامج الشامل</title>
+  <!-- أيقونة الموقع للرابط -->
+  <link rel="icon" type="image/x-icon" href="aman.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="aman.ico">
+  <link rel="apple-touch-icon" href="aman.ico">
+  <!-- Font Awesome أيقونات خفيفة -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #4f46e5;
+      --accent: #ec489a;
+      --success: #14b8a6;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8f9fa;
+      --gray: #94a3b8;
+      --border: rgba(99, 102, 241, 0.2);
+    }
 
-/* رأس الشاشة */
-header {
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-button.oracle-btn {
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:#6a11cb;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-button.oracle-btn.active {background:#2575fc;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* أزرار البرامج */
-.programs {
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-button.program-btn {
-  padding:8px 16px;
-  border:none;
-  border-radius:6px;
-  background:#6a11cb;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-button.program-btn.active {background:#2575fc;}
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+      color: #fff;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
 
-/* البطاقات */
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-  gap:20px;
-  width:100%;
-  max-width:1600px;
-}
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-/* البطاقة */
-.card {
-  display:flex;
-  flex-direction:column;
-  background:#312f44;
-  border-radius:12px;
-  padding:15px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.3);
-}
-.card h3 {margin:0 0 5px 0;}
-.card p {margin:3px 0;font-size:0.9em;}
-.card a {
-  margin-top:8px;
-  display:inline-block;
-  text-decoration:none;
-  color:white;
-  background:#2575fc;
-  padding:6px 12px;
-  border-radius:6px;
-  font-size:0.9em;
-  transition:0.3s;
-}
-.card a:hover {background:#6a11cb;}
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%);
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
 
-/* زر إظهار النسخ القديمة */
-#show-old-btn {
-  margin:20px 0;
-  padding:10px 18px;
-  border:none;
-  border-radius:6px;
-  background:#ff6a00;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-#show-old-btn:hover {opacity:0.8;}
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
 
-/* الخط الفاصل بين الجديد والقديم */
-.separator {
-  width:100%;
-  border-top:2px dashed #fff;
-  margin:20px 0 20px 0;
-  opacity:0.5;
-}
+    .header p {
+      color: var(--gray);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
 
-@media(max-width:650px){
-  header, .programs {flex-direction:column;align-items:center;}
-  .card {width:90%;}
-}
-</style>
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255,255,255,0.03);
+      color: var(--gray);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab i {
+      font-size: 1.1rem;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .tab:hover:not(.active) {
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .sub-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .sub-tabs.hidden {
+      display: none;
+    }
+
+    .sub-tab {
+      padding: 8px 26px;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255,255,255,0.02);
+      color: var(--gray);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .sub-tab.active {
+      background: linear-gradient(135deg, var(--accent), #db2777);
+      color: white;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    .sub-tab:hover:not(.active) {
+      background: rgba(236, 72, 153, 0.1);
+      color: white;
+    }
+
+    .search-box {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      display: flex;
+      gap: 12px;
+      background: rgba(255,255,255,0.03);
+      padding: 6px;
+      border-radius: 60px;
+      border: 1px solid var(--border);
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 60px;
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+    }
+
+    .search-input::placeholder {
+      color: var(--gray);
+    }
+
+    .search-input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .search-select {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      color: white;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    .search-select option {
+      background: #1e293b;
+      color: #fff;
+    }
+
+    .search-select:hover {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .search-select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(236,72,153,0.04));
+      border-radius: 60px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(5px);
+    }
+
+    .count {
+      color: var(--gray);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .count i {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    .count span {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.5rem;
+      margin: 0 5px;
+    }
+
+    .old-btn {
+      padding: 8px 24px;
+      border: none;
+      border-radius: 40px;
+      background: rgba(236,72,153,0.1);
+      color: var(--accent);
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+
+    .old-btn:hover {
+      background: rgba(236, 72, 153, 0.2);
+      transform: scale(0.98);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(20, 25, 55, 0.8), rgba(10, 14, 40, 0.9));
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px -12px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, rgba(30, 35, 75, 0.85), rgba(15, 19, 50, 0.95));
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.1);
+      color: var(--gray);
+      font-weight: 600;
+    }
+
+    .badge.new {
+      background: linear-gradient(135deg, var(--success), #0d9488);
+      color: white;
+    }
+
+    .badge.tool {
+      background: linear-gradient(135deg, var(--accent), #db2777);
+      color: white;
+    }
+
+    .details {
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      color: var(--gray);
+    }
+
+    .detail-row i {
+      width: 18px;
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    .detail-row strong {
+      color: #eef2ff;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .desc {
+      background: rgba(0,0,0,0.3);
+      padding: 10px 12px;
+      border-radius: 16px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+      color: #b9c2e6;
+      border-right: 3px solid var(--primary);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-copy {
+      background: rgba(255,255,255,0.05);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      min-width: 48px;
+      flex: 0;
+    }
+
+    .btn-copy:hover {
+      background: rgba(236,72,153,0.2);
+      transform: translateY(-2px);
+    }
+
+    .divider {
+      margin: 30px 0 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .divider span {
+      background: var(--dark);
+      padding: 8px 28px;
+      border-radius: 40px;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .message {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 45px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 28px;
+      border: 1px solid var(--border);
+    }
+
+    .message i {
+      font-size: 3rem;
+      color: var(--gray);
+      margin-bottom: 15px;
+      opacity: 0.6;
+    }
+
+    .footer {
+      margin-top: 55px;
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.85rem;
+      padding: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .alert {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--success), #0d9488);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      z-index: 1000;
+      animation: slide 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @keyframes slide {
+      from { bottom: -50px; opacity: 0; }
+      to { bottom: 25px; opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 15px; }
+      .header h1 { font-size: 2rem; }
+      .header { padding: 20px; }
+      .search-box { flex-direction: column; background: transparent; gap: 10px; }
+      .search-input { background: rgba(255,255,255,0.05); border-radius: 50px; }
+      .search-select { padding: 12px 20px; width: 100%; }
+      .stats { flex-direction: column; gap: 12px; text-align: center; }
+      .grid { grid-template-columns: 1fr; gap: 18px; }
+      .tab { padding: 8px 20px; font-size: 0.9rem; }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="header">
+      <h1>امان سوفت</h1>
+      <p>برامج وادوات الشامل</p>
+    </div>
 
-<header>
-  <button class="oracle-btn active" data-oracle="19">Oracle 19</button>
-  <button class="oracle-btn" data-oracle="10">Oracle 10</button>
-</header>
+    <div class="tabs" id="oracleTabs">
+      <button class="tab active" data-oracle="19"><i class="fas fa-database"></i>Oracle 19</button>
+      <button class="tab" data-oracle="10"><i class="fas fa-database"></i>Oracle 10</button>
+      <button class="tab" data-oracle="tools"><i class="fas fa-tools"></i>أدوات</button>
+    </div>
 
-<div class="programs">
-  <button class="program-btn active" data-program="الشامل">الشامل</button>
-  <button class="program-btn" data-program="الشامل بلاس">الشامل بلاس</button>
-  <button class="program-btn" data-program="الأولتكس">الأولتكس</button>
-</div>
+    <div class="sub-tabs" id="programTabs">
+      <button class="sub-tab active" data-program="الشامل">الشامل</button>
+      <button class="sub-tab" data-program="الشامل بلاس">الشامل بلاس</button>
+      <button class="sub-tab" data-program="الأولتكس">الأولتكس</button>
+    </div>
 
-<div class="cards" id="new-cards-container"></div>
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="بحث...">
+      <select class="search-select" id="searchType">
+        <option value="all">الكل</option>
+        <option value="name">الاسم</option>
+        <option value="desc">الوصف</option>
+        <option value="version">الإصدار</option>
+      </select>
+    </div>
 
-<button id="show-old-btn">إظهار النسخ القديمة</button>
+    <div class="stats">
+      <div class="count">
+        <i class="fas fa-cube"></i>
+        <span id="totalCount">0</span> برنامج
+      </div>
+      <button class="old-btn" id="toggleOld">
+        <i class="fas fa-history"></i>
+        <span id="toggleOldText">عرض  الاصدارات السابقة</span>
+      </button>
+    </div>
 
-<!-- الخط الفاصل -->
-<div class="separator"></div>
+    <div id="newGrid" class="grid"></div>
 
-<div class="cards" id="old-cards-container"></div>
+    <div class="divider" id="oldDivider" style="display: none;">
+      <span><i class="fas fa-archive"></i> إصدارات سابقة</span>
+    </div>
 
-<script src="versions.js"></script>
-<script>
-let selectedOracle="19", selectedProgram="الشامل", showOld=false;
+    <div id="oldGrid" class="grid"></div>
 
-const oracleBtns=document.querySelectorAll(".oracle-btn");
-oracleBtns.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    oracleBtns.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedOracle=btn.dataset.oracle;
-    renderCards();
-  });
-});
+    <div class="footer">
+      <p>المحاسب الشامل ادوات الدعم الفني</p>
+    </div>
+  </div>
 
-const programBtns=document.querySelectorAll(".program-btn");
-programBtns.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    programBtns.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedProgram=btn.dataset.program;
-    renderCards();
-  });
-});
-
-document.getElementById("show-old-btn").addEventListener("click",()=>{
-  showOld=!showOld;
-  renderCards();
-});
-
-function renderCards(){
-  const newContainer=document.getElementById("new-cards-container");
-  const oldContainer=document.getElementById("old-cards-container");
-  newContainer.innerHTML="";
-  oldContainer.innerHTML="";
-
-  if(!VERSIONS[selectedProgram]) return;
-
-  let versions=VERSIONS[selectedProgram]
-    .filter(v=>v.oracle===selectedOracle)
-    .sort((a,b)=>b.version.localeCompare(a.version));
-
-  versions.forEach(v=>{
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <h3>${v.name} oracle ${v.oracle} ver${v.version}</h3>
-      <h3>${v.update} : تحديث</h3>
-      <p><strong>تاريخ الإصدار:</strong> ${v.releaseDate}</p>
-      <p>${v.desc}</p>
-      <p><strong>${v.pos}</strong></p>
-      <a href="${v.url}" target="_blank">تحميل</a>
-    `;
-    if(v.status==="new"){
-      newContainer.appendChild(card);
-    } else if(showOld && v.status==="old"){
-      oldContainer.appendChild(card);
-    }
-  });
-}
-
-renderCards();
-</script>
-
+  <script src="versions.js"></script>
+  <script>
+window.copyUrl=async e=>{try{await navigator.clipboard.writeText(e);let a=document.createElement("div");a.className="alert",a.innerHTML='<i class="fas fa-check"></i> تم نسخ الرابط',document.body.appendChild(a),setTimeout(()=>a.remove(),2e3)}catch(t){alert("فشل النسخ")}};const state={oracle:"19",program:"الشامل",showOld:!1,search:"",searchType:"all"},programTabs=document.getElementById("programTabs"),newGrid=document.getElementById("newGrid"),oldGrid=document.getElementById("oldGrid"),oldDivider=document.getElementById("oldDivider"),totalSpan=document.getElementById("totalCount"),toggleBtn=document.getElementById("toggleOld"),toggleText=document.getElementById("toggleOldText"),searchInput=document.getElementById("searchInput"),searchSelect=document.getElementById("searchType");function filterItem(e){if(!state.search)return!0;let a=state.search.toLowerCase();return"all"===state.searchType?(e.name?.toLowerCase()||"").includes(a)||(e.desc?.toLowerCase()||"").includes(a)||(e.version?.toLowerCase()||"").includes(a):(e[state.searchType]?.toLowerCase()||"").includes(a)}function createCard(e,a){let t=document.createElement("div");t.className="card";let s=[];a?s.push(`<span class="badge tool">${e.type||"أداة"}</span>`):"new"===e.status&&s.push(`<span class="badge new">${e.type}</span>`);let r=e.url?.includes("download")||e.url?.includes("file");return t.innerHTML=`
+        <div class="card-header">
+          <span class="card-title">${e.name||"بدون اسم"}</span>
+          <div>${s.join("")}</div>
+        </div>
+        <div class="details">
+          ${e.type?`
+            <div class="detail-row"><i class="fas fa-tag"></i><span><strong>النوع:</strong> ${e.type}</span></div>
+          `:""}
+          ${e.oracle?`
+            <div class="detail-row"><i class="fas fa-database"></i><span><strong>Oracle:</strong> ${e.oracle}</span></div>
+          `:""}
+          <div class="detail-row"><i class="fas fa-code-branch"></i><span><strong>الإصدار:</strong> ${e.version||"—"}</span></div>
+          ${e.update?`
+            <div class="detail-row"><i class="fas fa-sync-alt"></i><span><strong>التحديث:</strong> ${e.update}</span></div>
+          `:""}
+          ${e.releaseDate?`
+            <div class="detail-row"><i class="fas fa-calendar"></i><span><strong>تاريخ التحديث:</strong> ${e.releaseDate}</span></div>
+          `:""}
+        </div>
+        ${e.desc?`<div class="desc"><i class="fas fa-info-circle"></i> ${e.desc}</div>`:""}
+        <div class="actions">
+          <a href="${e.url}" target="_blank" class="btn btn-primary">
+            <i class="fas ${r?"fa-download":"fa-external-link"}"></i> ${r?"تحميل":"فتح وتنزيل"}
+          </a>
+          <button onclick="copyUrl('${e.url}')" class="btn btn-copy" title="نسخ الرابط">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+      `,t}function render(){if("undefined"==typeof VERSIONS){newGrid.innerHTML='<div class="message"><i class="fas fa-exclamation"></i><p>خطأ في تحميل البيانات</p></div>';return}let e=[];"tools"===state.oracle?e=VERSIONS["الأدوات"]||[]:state.program&&VERSIONS[state.program]&&(e=VERSIONS[state.program].filter(e=>e.oracle===state.oracle));let a=e.filter(filterItem),t=a.filter(e=>"new"===(e.status||"new")),s=a.filter(e=>"old"===e.status);totalSpan.textContent=a.length,newGrid.innerHTML="",t.length?t.forEach(e=>newGrid.appendChild(createCard(e,"tools"===state.oracle))):a.length||(newGrid.innerHTML='<div class="message"><i class="fas fa-search"></i><p>لا توجد نتائج</p></div>'),oldGrid.innerHTML="",state.showOld?s.length?(oldDivider.style.display="block",s.forEach(e=>oldGrid.appendChild(createCard(e,"tools"===state.oracle)))):(oldDivider.style.display="none",t.length&&(oldGrid.innerHTML='<div class="message"><i class="fas fa-archive"></i><p>لا توجد نسخ قديمة</p></div>')):(oldDivider.style.display="none",s.length&&(oldGrid.innerHTML=`
+            <div class="message">
+              <i class="fas fa-history"></i>
+              <p>يوجد ${s.length} نسخ قديمة</p>
+            </div>
+          `))}document.querySelectorAll("[data-oracle]").forEach(e=>{e.addEventListener("click",()=>{document.querySelectorAll("[data-oracle]").forEach(e=>e.classList.remove("active")),e.classList.add("active"),state.oracle=e.dataset.oracle,programTabs.classList.toggle("hidden","tools"===state.oracle),"tools"===state.oracle?state.program=null:state.program=document.querySelector(".sub-tab.active")?.dataset.program||"الشامل",render()})}),document.querySelectorAll("[data-program]").forEach(e=>{e.addEventListener("click",()=>{document.querySelectorAll("[data-program]").forEach(e=>e.classList.remove("active")),e.classList.add("active"),state.program=e.dataset.program,render()})}),toggleBtn.addEventListener("click",()=>{state.showOld=!state.showOld,toggleText.textContent=state.showOld?"إخفاء القديم":"عرض القديم",render()}),searchInput.addEventListener("input",e=>{state.search=e.target.value,render()}),searchSelect.addEventListener("change",e=>{state.searchType=e.target.value,render()}),render();
+  </script>
 </body>
 </html>
